@@ -5,9 +5,6 @@ import com.jcieslak.airquality.data.model.Station
 import com.jcieslak.airquality.network.GiosService
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
-import retrofit2.Response
-import java.lang.Exception
-import java.net.HttpURLConnection
 import javax.inject.Inject
 
 class GiosRepositoryImpl @Inject constructor(
@@ -23,7 +20,7 @@ class GiosRepositoryImpl @Inject constructor(
                     response.isSuccessful -> {
                         return@map response.body()
                     }
-                    else -> {
+                    else -> { //TODO better error handling
                         throw  Exception(response.errorBody().toString())
                     }
                 }

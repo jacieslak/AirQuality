@@ -1,7 +1,7 @@
 package com.jcieslak.airquality.data.model
 
 data class Station(
-    val addressStreet: String,
+    val addressStreet: String?,
     val city: City,
     val gegrLat: String,
     val gegrLon: String,

@@ -20,7 +20,7 @@
             android:id="@+id/tv_station_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{station.stationName}"
+            app:stationAddress="@{station}"
             android:textStyle="bold"
             tools:ignore="MissingConstraints"
             tools:text="Rzeszów"/>

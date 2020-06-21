@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.jcieslak.airquality
+package com.jcieslak.airquality.base
 
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
