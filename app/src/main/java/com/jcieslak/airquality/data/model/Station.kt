@@ -6,7 +6,8 @@ data class Station(
     val gegrLat: String,
     val gegrLon: String,
     val id: Int,
-    val stationName: String
+    val stationName: String,
+    var sensors: List<Sensor>
 )
 
 data class Commune(

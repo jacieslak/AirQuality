@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="station"
+            type="com.jcieslak.airquality.data.model.Station" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
+
+        <TextView
+            android:id="@+id/tv_station_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{station.stationName}"
+            android:textStyle="bold"
+            tools:ignore="MissingConstraints"
+            tools:text="Rzeszów"/>
+
+        <TextView
+            android:id="@+id/tv_sensors"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            app:sensorsList="@{station.sensors}"
+            app:layout_constraintTop_toBottomOf="@+id/tv_station_title" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
