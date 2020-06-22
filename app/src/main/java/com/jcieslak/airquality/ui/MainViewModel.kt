@@ -1,5 +1,6 @@
 package com.jcieslak.airquality.ui
 
+import androidx.databinding.ObservableBoolean
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,26 +23,40 @@ class MainViewModel @ViewModelInject constructor(
     val filteredStationListLiveData: MutableLiveData<List<Station>> by lazy {
         MutableLiveData<List<Station>>()
     }
+    val errorMessage: MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }
+    val progressBarVisibility = ObservableBoolean(false)
+    val emptyListTextVisibility = ObservableBoolean(false)
+
     private var compositeDisposable = CompositeDisposable()
     var searchDisposable: Disposable? = null
 
     init {
+        //Get all stations and their sensors info
         compositeDisposable.add(giosRepository.getAllStations()
             .flatMapIterable { it }
             .flatMap { station ->
-                giosRepository.getStationSensors(station.id).toObservable()
+                giosRepository.getStationSensors(station.id)
                     .flatMap {
                         station.sensors = it
                         return@flatMap Observable.just(station)
                     }
             }
             .toList()
+            .doOnSubscribe { progressBarVisibility.set(true) }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .doFinally { progressBarVisibility.set(false) }
             .subscribe({ stations ->
-                stationListLiveData.value = stations.sortedBy { it.city.name }
+                if (stations.size > 0) {
+                    stationListLiveData.value = stations.sortedBy { it.city.name }
+                } else {
+                    emptyListTextVisibility.set(true)
+                }
             }, {
-                //TODO show error message
+                emptyListTextVisibility.set(true)
+                errorMessage.value = it.message
                 Timber.e(it)
             })
 
@@ -65,7 +80,7 @@ class MainViewModel @ViewModelInject constructor(
                     }
                 } ?: listOf()
             }
-                .delay(200, TimeUnit.MILLISECONDS) //TODO move delay to const
+                .delay(SEARCH_DURATION_MILLISECONDS, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -79,5 +94,9 @@ class MainViewModel @ViewModelInject constructor(
     override fun onCleared() {
         compositeDisposable.dispose()
         super.onCleared()
+    }
+
+    companion object {
+        private const val SEARCH_DURATION_MILLISECONDS = 200L
     }
 }
