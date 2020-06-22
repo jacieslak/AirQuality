@@ -20,14 +20,16 @@ AirQuality is a small demo application based on modern Android application tech-
   - [RxJava](https://github.com/ReactiveX/RxJava)
 - [Retrofit2 & OkHttp3](https://github.com/square/retrofit) - construct the REST APIs and paging network data.
 - [Timber](https://github.com/JakeWharton/timber) - logging.
-- [Material-Components](https://github.com/material-components/material-components-android) - Material design components like ripple animation, cardView.
-
 
 
 ## API
 
 AirQuailit using the [Interfejs programistyczny aplikacji (API) - GIOŚ](http://powietrze.gios.gov.pl/pjp/content/api)  for constructing RESTful API.<br>
 
+## Still TODO
+* Fix custom graph view
+* create unit tests
+* add api error handling
 
 
 # License
