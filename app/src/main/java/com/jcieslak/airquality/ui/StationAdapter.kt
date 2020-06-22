@@ -11,6 +11,7 @@ import com.jcieslak.airquality.databinding.ItemStationBinding
 class StationAdapter  : RecyclerView.Adapter<StationAdapter.StationViewHolder>() {
 
     private var items: List<Station> = listOf()
+    var itemClick: ((Station) -> Unit)? = null
 
     class StationViewHolder(val binding: ItemStationBinding) :
             RecyclerView.ViewHolder(binding.root)
@@ -19,6 +20,7 @@ class StationAdapter  : RecyclerView.Adapter<StationAdapter.StationViewHolder>()
         val inflater = LayoutInflater.from(parent.context)
         val binding =
             DataBindingUtil.inflate<ItemStationBinding>(inflater, R.layout.item_station, parent, false)
+
         return StationViewHolder(binding)
     }
 
@@ -35,6 +37,9 @@ class StationAdapter  : RecyclerView.Adapter<StationAdapter.StationViewHolder>()
         holder.binding.apply {
             station = item
             executePendingBindings()
+            root.setOnClickListener {
+                itemClick?.invoke(item)
+            }
         }
     }
 }

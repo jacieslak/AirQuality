@@ -1,7 +1,9 @@
 package com.jcieslak.airquality.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Menu
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
@@ -29,7 +31,11 @@ class MainActivity : DataBindingActivity(), SearchView.OnQueryTextListener {
                     DividerItemDecoration.VERTICAL
                 )
             )
-            adapter = StationAdapter()
+            adapter = StationAdapter().apply {
+                itemClick = { station ->
+                    startActivity(StationDetailsActivity.createIntent(this@MainActivity, station))
+                }
+            }
         }
         registerObservables()
     }
@@ -45,6 +51,7 @@ class MainActivity : DataBindingActivity(), SearchView.OnQueryTextListener {
         return true
     }
 
+    @SuppressLint("ShowToast")
     private fun registerObservables() {
         viewModel.stationListLiveData.observe(this, Observer { stations ->
             binding.adapter?.setStationList(stations)
@@ -52,6 +59,10 @@ class MainActivity : DataBindingActivity(), SearchView.OnQueryTextListener {
 
         viewModel.filteredStationListLiveData.observe(this, Observer { stations ->
             binding.adapter?.setStationList(stations)
+        })
+
+        viewModel.errorMessage.observe(this, Observer { errorMessage ->
+            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT)
         })
     }
 

@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">AirQuality</string>
     <string name="search_hint">Search...</string>
+    <string name="sensor_c6h6">C6H6</string>
+    <string name="sensor_co2">CO</string>
+    <string name="sensor_no2">NO2</string>
+    <string name="sensor_o3">O3</string>
+    <string name="sensor_pm10">PM10</string>
+    <string name="sensor_so2">SO2</string>
+    <string name="no_data">No data</string>
 </resources>

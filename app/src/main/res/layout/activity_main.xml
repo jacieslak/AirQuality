@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
         <variable
             name="vm"
             type="com.jcieslak.airquality.ui.MainViewModel" />
@@ -17,6 +18,28 @@
         android:layout_height="match_parent"
         android:clipToPadding="false">
 
+        <TextView
+            android:id="@+id/tv_empty_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_data"
+            android:visibility="@{vm.emptyListTextVisibility ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{vm.progressBarVisibility ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@+id/rv_stations"
+            app:layout_constraintEnd_toEndOf="@+id/rv_stations"
+            app:layout_constraintStart_toStartOf="@+id/rv_stations"
+            app:layout_constraintTop_toTopOf="@+id/rv_stations"
+            tools:ignore="MissingConstraints" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_stations"
