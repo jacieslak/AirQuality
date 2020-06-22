@@ -24,11 +24,11 @@ class StationDetailsActivity : DataBindingActivity() {
     private val simpleDateFormat = SimpleDateFormat(DATE_FORMAT)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding.apply {
             vm = viewModel
             viewModel.station = intent.getParcelableExtra(EXTRA_STATION)
             viewModel.getSensorsData()
+            tvTitle.text = viewModel.station.stationName
         }
 
         registerObservables()
